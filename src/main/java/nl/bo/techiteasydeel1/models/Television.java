@@ -13,7 +13,7 @@ public class Television {
     String name;
     Double price;
     Double availableSize;
-    int refreshRate;
+    Double refreshRate;
     String screentype;
     String screenQuality;
     Boolean smartTv;
@@ -73,11 +73,11 @@ public class Television {
         this.availableSize = availableSize;
     }
 
-    public int getRefreshRate() {
+    public Double getRefreshRate() {
         return refreshRate;
     }
 
-    public void setRefreshRate(int refreshRate) {
+    public void setRefreshRate(Double refreshRate) {
         this.refreshRate = refreshRate;
     }
 
@@ -165,7 +165,7 @@ public class Television {
 
     }
 
-    public Television(String type, String brand, String name, Double price, Double availableSize, int refreshRate, String screentype, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
+    public Television(String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screentype, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
         this.type = type;
         this.brand = brand;
         this.name = name;

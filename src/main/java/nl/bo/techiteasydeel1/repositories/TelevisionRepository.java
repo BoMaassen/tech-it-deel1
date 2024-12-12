@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TelevisionRepository extends JpaRepository<Television, Long> {
 
+    //List<Television> findAllTelevisionsByBrandEqualsIgnoreCase(String brand);
+
 }
