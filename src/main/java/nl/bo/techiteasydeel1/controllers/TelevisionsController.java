@@ -1,8 +1,10 @@
 package nl.bo.techiteasydeel1.controllers;
 
+import nl.bo.techiteasydeel1.dtos.TelevisionDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.Television;
 import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
+import nl.bo.techiteasydeel1.services.TelevisionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,61 +18,36 @@ import java.util.OptionalInt;
 public class TelevisionsController {
 
     private final TelevisionRepository televisionRepository;
+    private final TelevisionService televisionService;
 
-    public TelevisionsController(TelevisionRepository televisionRepository) {
+    public TelevisionsController(TelevisionRepository televisionRepository, TelevisionService televisionService) {
         this.televisionRepository = televisionRepository;
+        this.televisionService = televisionService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Television>> getTelevisions(){
-        List<Television> televisions = televisionRepository.findAll();
-        return ResponseEntity.ok(televisions);
+    public ResponseEntity<List<TelevisionDto>> getTelevisions(){
+        List<Television> responseDto = televisionService.getTelevision();
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Television> getTelevision(@PathVariable Long id){
-        Optional<Television> television = televisionRepository.findById(id);
+    public ResponseEntity<TelevisionDto> getTelevision(@PathVariable Long id){
+        Optional<TelevisionDto> televisionDto = televisionService.televisionById(id);
 
-        if(television.isEmpty()){
-            throw new RecordNotFoundException("No television found with id: " + id);
-        }else {
-            Television television1 = television.get();
-            return ResponseEntity.ok(television1);
+            return ResponseEntity.ok(televisionDto);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Television> createTv(@RequestBody Television television){
+    public ResponseEntity<TelevisionDto> createTv(@RequestBody Television television){
         Television newTv = televisionRepository.save(television);
         return ResponseEntity.created(null).body(newTv);
 
     }
     @PutMapping ("/{id}")
-    public ResponseEntity<Television> updateTv(@PathVariable Long id, @RequestBody Television television){
-        Optional<Television> currentTv = televisionRepository.findById(id);
-        if(currentTv.isPresent()){
-            Television updatedTv = currentTv.get();
-            updatedTv.setType(television.getType());
-            updatedTv.setBrand(television.getBrand());
-            updatedTv.setName(television.getName());
-            updatedTv.setPrice(television.getPrice());
-            updatedTv.setAvailableSize(television.getAvailableSize());
-            updatedTv.setRefreshRate(television.getRefreshRate());
-            updatedTv.setScreentype(television.getScreentype());
-            updatedTv.setScreenQuality(television.getScreenQuality());
-            updatedTv.setSmartTv(television.getSmartTv());
-            updatedTv.setWifi(television.getWifi());
-            updatedTv.setVoiceControl(television.getVoiceControl());
-            updatedTv.setHdr(television.getHdr());
-            updatedTv.setBluetooth(television.getBluetooth());
-            updatedTv.setAmbiLight(television.getAmbiLight());
-            updatedTv.setOriginalStock(television.getOriginalStock());
-            updatedTv.setSold(television.getSold());
-            televisionRepository.save(updatedTv);
-            return ResponseEntity.ok(updatedTv);
-        }else {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<TelevisionDto> updateTv(@PathVariable Long id, @RequestBody Television television){
+
     }
 
     @DeleteMapping("/{id}")
@@ -80,7 +57,7 @@ public class TelevisionsController {
     }
 
     @PatchMapping("/televisions/{id}")
-    public ResponseEntity<Television> updatePartialTelevision(@PathVariable Long id, @RequestBody Television newTelevision) {
+    public ResponseEntity<TelevisionDto> updatePartialTelevision(@PathVariable Long id, @RequestBody Television newTelevision) {
         Optional<Television> television = televisionRepository.findById(id);
 
         if (television.isEmpty()) {

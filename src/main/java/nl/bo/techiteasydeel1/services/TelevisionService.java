@@ -1,0 +1,127 @@
+package nl.bo.techiteasydeel1.services;
+
+import nl.bo.techiteasydeel1.dtos.TelevisionDto;
+import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
+import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
+import nl.bo.techiteasydeel1.models.Television;
+import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class TelevisionService {
+    private final TelevisionRepository televisionRepository;
+
+    public TelevisionService(TelevisionRepository televisionRepository) {
+        this.televisionRepository = televisionRepository;
+    }
+
+    public static TelevisionDto toTelevisionDto (Television television){
+        var dto = new TelevisionDto();
+        dto.setType(television.getType());
+        dto.setBrand(television.getBrand());
+        dto.setName(television.getName());
+        dto.setPrice(television.getPrice());
+        dto.setAvailableSize(television.getAvailableSize());
+        dto.setRefreshRate(television.getRefreshRate());
+        dto.setScreentype(television.getScreenQuality());
+        dto.setSmartTv(television.getSmartTv());
+        dto.setWifi(television.getWifi());
+        dto.setVoiceControl(television.getVoiceControl());
+        dto.setHdr(television.getHdr());
+        dto.setBluetooth(television.getBluetooth());
+        dto.setAmbiLight(television.getAmbiLight());
+        dto.setOriginalStock(television.getOriginalStock());
+        dto.setSold(television.getSold());
+        return dto;
+    }
+
+    public Television toTelevision(TelevisionDto dto){
+        var television = new Television();
+        television.setType(dto.getType());
+        television.setBrand(dto.getBrand());
+        television.setName(dto.getName());
+        television.setPrice(dto.getPrice());
+        television.setAvailableSize(dto.getAvailableSize());
+        television.setRefreshRate(dto.getRefreshRate());
+        television.setScreentype(dto.getScreentype());
+        television.setSmartTv(dto.getSmartTv());
+        television.setWifi(dto.getWifi());
+        television.setVoiceControl(dto.getVoiceControl());
+        television.setHdr(dto.getHdr());
+        television.setBluetooth(dto.getBluetooth());
+        television.setAmbiLight(dto.getAmbiLight());
+        television.setOriginalStock(dto.getOriginalStock());
+        television.setSold(dto.getSold());
+        return television;
+
+    }
+
+    public List<TelevisionDto> getTelevision(){
+        List<Television> televisions = televisionRepository.findAll();
+        List<TelevisionDto> tvDtoList = new ArrayList<>();
+
+        for(Television tv : televisions){
+            TelevisionDto dto = toTelevisionDto(tv);
+            tvDtoList.add(dto);
+        }
+
+        return tvDtoList;
+    }
+
+   public TelevisionDto televisionById(Long id){
+        Optional<Television> televisionOptional = televisionRepository.findById(id);
+       if (televisionOptional.isPresent()){
+           Television tv = televisionOptional.get();
+           return toTelevisionDto(tv);
+       } else {
+           throw new RecordNotFoundException("geen televisie gevonden");
+       }
+   }
+
+    public TelevisionDto saveTelevision(TelevisionInputDto dto) {
+
+        Television tv = toTelevision(dto);
+        televisionRepository.save(tv);
+
+        return toTelevisionDto(tv);
+    }
+
+   public void deleteTelevision(Long id){
+        televisionRepository.deleteById(id);
+
+   }
+
+   public TelevisionDto updateTelevision(Long id, TelevisionInputDto television){
+
+       Optional<Television> currentTv = televisionRepository.findById(id);
+       if(currentTv.isPresent()){
+           Television updatedTv = currentTv.get();
+           updatedTv.setType(television.getType());
+           updatedTv.setBrand(television.getBrand());
+           updatedTv.setName(television.getName());
+           updatedTv.setPrice(television.getPrice());
+           updatedTv.setAvailableSize(television.getAvailableSize());
+           updatedTv.setRefreshRate(television.getRefreshRate());
+           updatedTv.setScreentype(television.getScreentype());
+           updatedTv.setScreenQuality(television.getScreenQuality());
+           updatedTv.setSmartTv(television.getSmartTv());
+           updatedTv.setWifi(television.getWifi());
+           updatedTv.setVoiceControl(television.getVoiceControl());
+           updatedTv.setHdr(television.getHdr());
+           updatedTv.setBluetooth(television.getBluetooth());
+           updatedTv.setAmbiLight(television.getAmbiLight());
+           updatedTv.setOriginalStock(television.getOriginalStock());
+           updatedTv.setSold(television.getSold());
+           Television returnTv = televisionRepository.save(updatedTv);
+           return toTelevisionDto(returnTv);
+       }else {
+           throw new RecordNotFoundException("Geen televisie gevonden");
+       }
+   }
+
+}
