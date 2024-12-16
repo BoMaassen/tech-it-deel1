@@ -19,7 +19,7 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
-    public TelevisionDto toTelevisionDto (Television television){
+    public TelevisionDto toTelevisionDto(Television television) {
         TelevisionDto dto = new TelevisionDto();
         dto.setType(television.getType());
         dto.setBrand(television.getBrand());
@@ -40,7 +40,7 @@ public class TelevisionService {
         return dto;
     }
 
-    public Television toTelevision(TelevisionInputDto dto){
+    public Television toTelevision(TelevisionInputDto dto) {
         var television = new Television();
         television.setType(dto.getType());
         television.setBrand(dto.getBrand());
@@ -62,26 +62,26 @@ public class TelevisionService {
 
     }
 
-    public List<TelevisionDto> getTelevision(){
+    public List<TelevisionDto> getTelevision() {
         List<Television> tvList = televisionRepository.findAll();
         List<TelevisionDto> tvDtoList = new ArrayList<>();
 
-        for(Television tv : tvList){
+        for (Television tv : tvList) {
             TelevisionDto dto = toTelevisionDto(tv);
             tvDtoList.add(dto);
         }
         return tvDtoList;
     }
 
-   public TelevisionDto televisionById(Long id){
+    public TelevisionDto televisionById(Long id) {
         Optional<Television> televisionOptional = televisionRepository.findById(id);
-       if (televisionOptional.isPresent()){
-           Television tv = televisionOptional.get();
-           return toTelevisionDto(tv);
-       } else {
-           throw new RecordNotFoundException("geen televisie gevonden");
-       }
-   }
+        if (televisionOptional.isPresent()) {
+            Television tv = televisionOptional.get();
+            return toTelevisionDto(tv);
+        } else {
+            throw new RecordNotFoundException("geen televisie gevonden");
+        }
+    }
 
     public TelevisionDto saveTelevision(TelevisionInputDto dto) {
 
@@ -91,37 +91,37 @@ public class TelevisionService {
         return toTelevisionDto(tv);
     }
 
-   public void deleteTelevision(Long id){
+    public void deleteTelevision(Long id) {
         televisionRepository.deleteById(id);
 
-   }
+    }
 
-   public TelevisionDto updateTelevision(Long id, TelevisionInputDto television){
+    public TelevisionDto updateTelevision(Long id, TelevisionInputDto television) {
 
-       Optional<Television> currentTv = televisionRepository.findById(id);
-       if(currentTv.isPresent()){
-           Television updatedTv = currentTv.get();
-           updatedTv.setType(television.getType());
-           updatedTv.setBrand(television.getBrand());
-           updatedTv.setName(television.getName());
-           updatedTv.setPrice(television.getPrice());
-           updatedTv.setAvailableSize(television.getAvailableSize());
-           updatedTv.setRefreshRate(television.getRefreshRate());
-           updatedTv.setScreenType(television.getScreenType());
-           updatedTv.setScreenQuality(television.getScreenQuality());
-           updatedTv.setSmartTv(television.getSmartTv());
-           updatedTv.setWifi(television.getWifi());
-           updatedTv.setVoiceControl(television.getVoiceControl());
-           updatedTv.setHdr(television.getHdr());
-           updatedTv.setBluetooth(television.getBluetooth());
-           updatedTv.setAmbiLight(television.getAmbiLight());
-           updatedTv.setOriginalStock(television.getOriginalStock());
-           updatedTv.setSold(television.getSold());
-           Television returnTv = televisionRepository.save(updatedTv);
-           return toTelevisionDto(returnTv);
-       }else {
-           throw new RecordNotFoundException("Geen televisie gevonden");
-       }
-   }
+        Optional<Television> currentTv = televisionRepository.findById(id);
+        if (currentTv.isPresent()) {
+            Television updatedTv = currentTv.get();
+            updatedTv.setType(television.getType());
+            updatedTv.setBrand(television.getBrand());
+            updatedTv.setName(television.getName());
+            updatedTv.setPrice(television.getPrice());
+            updatedTv.setAvailableSize(television.getAvailableSize());
+            updatedTv.setRefreshRate(television.getRefreshRate());
+            updatedTv.setScreenType(television.getScreenType());
+            updatedTv.setScreenQuality(television.getScreenQuality());
+            updatedTv.setSmartTv(television.getSmartTv());
+            updatedTv.setWifi(television.getWifi());
+            updatedTv.setVoiceControl(television.getVoiceControl());
+            updatedTv.setHdr(television.getHdr());
+            updatedTv.setBluetooth(television.getBluetooth());
+            updatedTv.setAmbiLight(television.getAmbiLight());
+            updatedTv.setOriginalStock(television.getOriginalStock());
+            updatedTv.setSold(television.getSold());
+            Television returnTv = televisionRepository.save(updatedTv);
+            return toTelevisionDto(returnTv);
+        } else {
+            throw new RecordNotFoundException("Geen televisie gevonden");
+        }
+    }
 
 }
