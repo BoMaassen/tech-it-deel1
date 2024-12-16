@@ -14,7 +14,7 @@ public class Television {
     Double price;
     Double availableSize;
     Double refreshRate;
-    String screentype;
+    String screenType;
     String screenQuality;
     Boolean smartTv;
     Boolean wifi;
@@ -81,12 +81,12 @@ public class Television {
         this.refreshRate = refreshRate;
     }
 
-    public String getScreentype() {
-        return screentype;
+    public String getScreenType() {
+        return screenType;
     }
 
-    public void setScreentype(String screentype) {
-        this.screentype = screentype;
+    public void setScreenType(String screenType) {
+        this.screenType = screenType;
     }
 
     public String getScreenQuality() {
@@ -161,26 +161,4 @@ public class Television {
         this.sold = sold;
     }
 
-    public Television(){
-
-    }
-
-    public Television(String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screentype, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screentype = screentype;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
 }

@@ -33,7 +33,7 @@ public class TelevisionsController {
     }
 
 
-    @PostMapping("/televisions")
+    @PostMapping
     public ResponseEntity<TelevisionDto> addTelevision(@Valid @RequestBody TelevisionInputDto televisionInputDto) {
 
         TelevisionDto dto = televisionService.saveTelevision(televisionInputDto);

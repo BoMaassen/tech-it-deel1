@@ -7,7 +7,7 @@ public class TelevisionDto {
     Double price;
     Double availableSize;
     Double refreshRate;
-    String screentype;
+    String screenType;
     String screenQuality;
     Boolean smartTv;
     Boolean wifi;
@@ -75,12 +75,12 @@ public class TelevisionDto {
         this.refreshRate = refreshRate;
     }
 
-    public String getScreentype() {
-        return screentype;
+    public String getScreenType() {
+        return screenType;
     }
 
-    public void setScreentype(String screentype) {
-        this.screentype = screentype;
+    public void setScreenType(String screenType) {
+        this.screenType = screenType;
     }
 
     public String getScreenQuality() {

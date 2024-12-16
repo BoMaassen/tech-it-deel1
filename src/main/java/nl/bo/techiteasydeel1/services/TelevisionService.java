@@ -27,7 +27,8 @@ public class TelevisionService {
         dto.setPrice(television.getPrice());
         dto.setAvailableSize(television.getAvailableSize());
         dto.setRefreshRate(television.getRefreshRate());
-        dto.setScreentype(television.getScreenQuality());
+        dto.setScreenType(television.getScreenType());
+        dto.setScreenQuality(television.getScreenQuality());
         dto.setSmartTv(television.getSmartTv());
         dto.setWifi(television.getWifi());
         dto.setVoiceControl(television.getVoiceControl());
@@ -47,7 +48,8 @@ public class TelevisionService {
         television.setPrice(dto.getPrice());
         television.setAvailableSize(dto.getAvailableSize());
         television.setRefreshRate(dto.getRefreshRate());
-        television.setScreentype(dto.getScreentype());
+        television.setScreenType(dto.getScreenType());
+        television.setScreenQuality(dto.getScreenQuality());
         television.setSmartTv(dto.getSmartTv());
         television.setWifi(dto.getWifi());
         television.setVoiceControl(dto.getVoiceControl());
@@ -105,7 +107,7 @@ public class TelevisionService {
            updatedTv.setPrice(television.getPrice());
            updatedTv.setAvailableSize(television.getAvailableSize());
            updatedTv.setRefreshRate(television.getRefreshRate());
-           updatedTv.setScreentype(television.getScreentype());
+           updatedTv.setScreenType(television.getScreenType());
            updatedTv.setScreenQuality(television.getScreenQuality());
            updatedTv.setSmartTv(television.getSmartTv());
            updatedTv.setWifi(television.getWifi());
