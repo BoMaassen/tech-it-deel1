@@ -5,7 +5,6 @@ import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.Television;
 import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
-    public static TelevisionDto toTelevisionDto (Television television){
-        var dto = new TelevisionDto();
+    public TelevisionDto toTelevisionDto (Television television){
+        TelevisionDto dto = new TelevisionDto();
         dto.setType(television.getType());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());
@@ -40,7 +39,7 @@ public class TelevisionService {
         return dto;
     }
 
-    public Television toTelevision(TelevisionDto dto){
+    public Television toTelevision(TelevisionInputDto dto){
         var television = new Television();
         television.setType(dto.getType());
         television.setBrand(dto.getBrand());
@@ -62,14 +61,13 @@ public class TelevisionService {
     }
 
     public List<TelevisionDto> getTelevision(){
-        List<Television> televisions = televisionRepository.findAll();
+        List<Television> tvList = televisionRepository.findAll();
         List<TelevisionDto> tvDtoList = new ArrayList<>();
 
-        for(Television tv : televisions){
+        for(Television tv : tvList){
             TelevisionDto dto = toTelevisionDto(tv);
             tvDtoList.add(dto);
         }
-
         return tvDtoList;
     }
 
