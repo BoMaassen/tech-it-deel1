@@ -13,6 +13,7 @@ public class RemoteControllerInputDto {
     private String brand;
     @Positive(message = "Price must be higher than zero")
     private Double price;
+    private Integer originalStock;
 
     public Integer getOriginalStock() {
         return originalStock;
@@ -61,6 +62,4 @@ public class RemoteControllerInputDto {
     public void setCompatibleWith(String compatibleWith) {
         this.compatibleWith = compatibleWith;
     }
-
-    private Integer originalStock;
 }

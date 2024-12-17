@@ -3,7 +3,7 @@ package nl.bo.techiteasydeel1.dtos;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class WallBRacketInputDto {
+public class WallBracketInputDto {
     private String size;
     private Boolean adjustable;
     @Size(max = 20, message = "Name must be between 0-20 characters")
