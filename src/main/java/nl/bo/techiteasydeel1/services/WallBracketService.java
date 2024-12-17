@@ -66,14 +66,14 @@ public class WallBracketService {
         wallBracketRepository.deleteById(id);
     }
 
-    public WallBracketDto updateWallBracket(Long id, WallBracketDto wallBracket){
+    public WallBracketDto updateWallBracket(Long id, WallBracketInputDto wallBracketInputDto){
         Optional<WallBracket> currentWallBracket = wallBracketRepository.findById(id);
         if (currentWallBracket.isPresent()){
             WallBracket updatedWallBracket = currentWallBracket.get();
-            updatedWallBracket.setSize(wallBracket.getSize());
-            updatedWallBracket.setAdjustable(wallBracket.getAdjustable());
-            updatedWallBracket.setName(wallBracket.getName());
-            updatedWallBracket.setPrice(wallBracket.getPrice());
+            updatedWallBracket.setSize(wallBracketInputDto.getSize());
+            updatedWallBracket.setAdjustable(wallBracketInputDto.getAdjustable());
+            updatedWallBracket.setName(wallBracketInputDto.getName());
+            updatedWallBracket.setPrice(wallBracketInputDto.getPrice());
             WallBracket returnWallBracket = wallBracketRepository.save(updatedWallBracket);
             return toWallBracketDto(returnWallBracket);
         }else throw new RuntimeException("Geen tv beugel gevonden");

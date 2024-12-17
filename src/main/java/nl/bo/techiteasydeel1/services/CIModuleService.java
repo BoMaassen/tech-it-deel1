@@ -67,7 +67,7 @@ public class CIModuleService {
         ciModulesRepository.deleteById(id);
     }
 
-    public CIModuleDto updateCIModule(Long id, TelevisionInputDto cimodule){
+    public CIModuleDto updateCIModule(Long id, CIModuleInputDto cimodule){
        Optional<CIModule> ciModuleOptional = ciModulesRepository.findById(id);
         if (ciModuleOptional.isPresent()){
             CIModule updatedCIModule = ciModuleOptional.get();

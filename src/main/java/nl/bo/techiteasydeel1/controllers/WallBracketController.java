@@ -1,9 +1,12 @@
 package nl.bo.techiteasydeel1.controllers;
 
+import nl.bo.techiteasydeel1.dtos.WallBracketDto;
+import nl.bo.techiteasydeel1.dtos.WallBracketInputDto;
 import nl.bo.techiteasydeel1.models.CIModule;
 import nl.bo.techiteasydeel1.models.WallBracket;
 import nl.bo.techiteasydeel1.repositories.CIModulesRepository;
 import nl.bo.techiteasydeel1.repositories.WallBracketRepository;
+import nl.bo.techiteasydeel1.services.WallBracketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,51 +16,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/wall-brackets")
 public class WallBracketController {
-    private final WallBracketRepository wallBracketRepository;
+    private final WallBracketService wallBracketService;
 
-    public WallBracketController(WallBracketRepository wallBracketRepository) {
-        this.wallBracketRepository = wallBracketRepository;
+    public WallBracketController(WallBracketService wallBracketService) {
+        this.wallBracketService = wallBracketService;
     }
 
-
     @GetMapping
-    public ResponseEntity<List<WallBracket>> getWallBrackets(){
-        List<WallBracket> wallBrackets = wallBracketRepository.findAll();
-        return ResponseEntity.ok(wallBrackets);
+    public ResponseEntity<List<WallBracketDto>> getWallBrackets(){
+        List<WallBracketDto> wallBracketsDto = wallBracketService.getWallBrackets();
+        return ResponseEntity.ok(wallBracketsDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WallBracket> getWallBracketById(@PathVariable Long id){
-        WallBracket wallBracket = wallBracketRepository.getById(id);
-        return ResponseEntity.ok(wallBracket);
+    public ResponseEntity<WallBracketDto> getWallBracketById(@PathVariable Long id){
+        WallBracketDto wallBracketDto = wallBracketService.getWallBracketById(id);
+        return ResponseEntity.ok(wallBracketDto);
     }
 
     @PostMapping
-    public ResponseEntity<WallBracket> addWallBracket(@RequestBody WallBracket wallBracket){
-        WallBracket savedWallBracket = wallBracketRepository.save(wallBracket);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedWallBracket);
+    public ResponseEntity<WallBracketDto> addWallBracket(@RequestBody WallBracketInputDto wallBracketInputDto){
+        WallBracketDto wallBracketDto = wallBracketService.saveWallBracket(wallBracketInputDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(wallBracketDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WallBracket> updateWallBracket(@PathVariable Long id, @RequestBody WallBracket wallBracket){
-        var currentWallBracket = wallBracketRepository.findById(id);
-        if (currentWallBracket.isEmpty()){
-            return ResponseEntity.notFound().build();
-
-        }else {
-            WallBracket updatedWallBracket = currentWallBracket.get();
-            updatedWallBracket.setSize(wallBracket.getSize());
-            updatedWallBracket.setAdjustable(wallBracket.getAdjustable());
-            updatedWallBracket.setName(wallBracket.getName());
-            updatedWallBracket.setPrice(wallBracket.getPrice());
-
-            return ResponseEntity.ok(updatedWallBracket);
+    public ResponseEntity<WallBracketDto> updateWallBracket(@PathVariable Long id, @RequestBody WallBracketInputDto wallBracketInputDto){
+        WallBracketDto wallBracketDto = wallBracketService.updateWallBracket(id, wallBracketInputDto);
+            return ResponseEntity.ok(wallBracketDto);
         }
-    }
+
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<WallBracket> deleteWallBracket(@PathVariable Long id){
-        wallBracketRepository.deleteById(id);
+    public ResponseEntity<Object> deleteWallBracket(@PathVariable Long id){
+        wallBracketService.deleteWallBracket(id);
         return ResponseEntity.noContent().build();
     }
 }

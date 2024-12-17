@@ -1,7 +1,11 @@
 package nl.bo.techiteasydeel1.controllers;
 
+import jakarta.validation.Valid;
+import nl.bo.techiteasydeel1.dtos.RemoteControllerDto;
+import nl.bo.techiteasydeel1.dtos.RemoteControllerInputDto;
 import nl.bo.techiteasydeel1.models.RemoteController;
 import nl.bo.techiteasydeel1.repositories.RemoteControllerRepository;
+import nl.bo.techiteasydeel1.services.RemoteControllerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,51 +17,41 @@ import java.util.Optional;
 @RequestMapping("/remote-controllers")
 public class RemoteControllerController {
 
-    private final RemoteControllerRepository remoteControllerRepository;
+    private final RemoteControllerService remoteControllerService;
 
-    public RemoteControllerController(RemoteControllerRepository remoteControllerRepository) {
-        this.remoteControllerRepository = remoteControllerRepository;
+    public RemoteControllerController(RemoteControllerService remoteControllerService) {
+        this.remoteControllerService = remoteControllerService;
     }
 
+
     @GetMapping
-    public ResponseEntity<List<RemoteController>> getRemoteControllers(){
-       List<RemoteController> remoteControllers = remoteControllerRepository.findAll();
-        return ResponseEntity.ok(remoteControllers);
+    public ResponseEntity<List<RemoteControllerDto>> getRemoteControllers(){
+       List<RemoteControllerDto> responseDto = remoteControllerService.getRemoteControllers();
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RemoteController> getRemoteControllerById(@PathVariable Long id){
-        RemoteController remoteController = remoteControllerRepository.getById(id);
-        return ResponseEntity.ok(remoteController);
+    public ResponseEntity<RemoteControllerDto> getRemoteControllerById(@PathVariable Long id){
+        RemoteControllerDto remoteControllerDto = remoteControllerService.remoteControllerById(id);
+        return ResponseEntity.ok(remoteControllerDto);
     }
 
     @PostMapping
-    public ResponseEntity<RemoteController> addRemoteController(@RequestBody RemoteController remoteController){
-        RemoteController savedRemoteController = remoteControllerRepository.save(remoteController);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedRemoteController);
+    public ResponseEntity<RemoteControllerDto> addRemoteController(@Valid @RequestBody RemoteControllerInputDto remoteControllerInputDto){
+        RemoteControllerDto dto = remoteControllerService.saveRemoteController(remoteControllerInputDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RemoteController> updateRemoteController(@PathVariable Long id, @RequestBody RemoteController remoteControllerDetails){
-       var currentRemoteController = remoteControllerRepository.findById(id);
-       if (currentRemoteController.isEmpty()){
-           return ResponseEntity.notFound().build();
+    public ResponseEntity<RemoteControllerDto> updateRemoteController(@PathVariable Long id, @RequestBody RemoteControllerInputDto remoteControllerInputDto){
+       RemoteControllerDto dto = remoteControllerService.updateRemoteController(id, remoteControllerInputDto);
+       return ResponseEntity.ok(dto);
 
-       }else {
-           RemoteController updatedRemoteController = currentRemoteController.get();
-           updatedRemoteController.setCompatibleWith(remoteControllerDetails.getCompatibleWith());
-           updatedRemoteController.setBatteryType(remoteControllerDetails.getBatteryType());
-           updatedRemoteController.setName(remoteControllerDetails.getName());
-           updatedRemoteController.setBrand(remoteControllerDetails.getBrand());
-           updatedRemoteController.setPrice(remoteControllerDetails.getPrice());
-           updatedRemoteController.setOriginalStock(remoteControllerDetails.getOriginalStock());
-           return ResponseEntity.ok(updatedRemoteController);
-       }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<RemoteController> deleteRemoteController(@PathVariable Long id){
-        remoteControllerRepository.deleteById(id);
+    public ResponseEntity<Object> deleteRemoteController(@PathVariable Long id){
+        remoteControllerService.deleteRemoteController(id);
         return ResponseEntity.noContent().build();
     }
 }
