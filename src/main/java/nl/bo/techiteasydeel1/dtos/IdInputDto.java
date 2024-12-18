@@ -1,6 +1,5 @@
 package nl.bo.techiteasydeel1.dtos;
 
-import java.lang.invoke.CallSite;
 
 public class IdInputDto {
     private Long id;

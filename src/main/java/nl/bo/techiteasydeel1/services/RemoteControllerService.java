@@ -5,7 +5,6 @@ import nl.bo.techiteasydeel1.dtos.RemoteControllerInputDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.RemoteController;
 import nl.bo.techiteasydeel1.repositories.RemoteControllerRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class RemoteControllerService {
         this.remoteControllerRepository = remoteControllerRepository;
     }
 
-    public RemoteControllerDto toRemoteControllerDto(RemoteController remoteController){
+    public RemoteControllerDto toRemoteControllerDto(RemoteController remoteController) {
         RemoteControllerDto dto = new RemoteControllerDto();
         dto.setId(remoteController.getId());
         dto.setCompatibleWith(remoteController.getCompatibleWith());
@@ -32,7 +31,7 @@ public class RemoteControllerService {
         return dto;
     }
 
-    public RemoteController toRemoteController(RemoteControllerInputDto dto){
+    public RemoteController toRemoteController(RemoteControllerInputDto dto) {
         var remotecontroller = new RemoteController();
         remotecontroller.setCompatibleWith(dto.getCompatibleWith());
         remotecontroller.setBatteryType(dto.getBatteryType());
@@ -43,40 +42,40 @@ public class RemoteControllerService {
         return remotecontroller;
     }
 
-    public List<RemoteControllerDto> getRemoteControllers(){
-    List<RemoteController> rcList = remoteControllerRepository.findAll();
-    List<RemoteControllerDto> rcDtoList = new ArrayList<>();
-    for (RemoteController remoteController : rcList){
-        RemoteControllerDto dto = toRemoteControllerDto(remoteController);
-        rcDtoList.add(dto);
-    }
-            return rcDtoList;
+    public List<RemoteControllerDto> getRemoteControllers() {
+        List<RemoteController> rcList = remoteControllerRepository.findAll();
+        List<RemoteControllerDto> rcDtoList = new ArrayList<>();
+        for (RemoteController remoteController : rcList) {
+            RemoteControllerDto dto = toRemoteControllerDto(remoteController);
+            rcDtoList.add(dto);
+        }
+        return rcDtoList;
     }
 
-    public RemoteControllerDto remoteControllerById(Long id){
+    public RemoteControllerDto remoteControllerById(Long id) {
         Optional<RemoteController> remoteControllerOptional = remoteControllerRepository.findById(id);
-        if (remoteControllerOptional.isPresent()){
+        if (remoteControllerOptional.isPresent()) {
             RemoteController remoteController = remoteControllerOptional.get();
             return toRemoteControllerDto(remoteController);
-        }else {
+        } else {
             throw new RecordNotFoundException("Geen afstandsbediening gevonden");
         }
     }
 
-    public RemoteControllerDto saveRemoteController(RemoteControllerInputDto dto){
+    public RemoteControllerDto saveRemoteController(RemoteControllerInputDto dto) {
         RemoteController remoteController = toRemoteController(dto);
         remoteControllerRepository.save(remoteController);
 
         return toRemoteControllerDto(remoteController);
     }
 
-    public  void deleteRemoteController(Long id){
+    public void deleteRemoteController(Long id) {
         remoteControllerRepository.deleteById(id);
     }
 
-    public RemoteControllerDto updateRemoteController(Long id, RemoteControllerInputDto remotecontroller){
+    public RemoteControllerDto updateRemoteController(Long id, RemoteControllerInputDto remotecontroller) {
         Optional<RemoteController> currentRemoteController = remoteControllerRepository.findById(id);
-        if (currentRemoteController.isPresent()){
+        if (currentRemoteController.isPresent()) {
             RemoteController updatedRemoteController = currentRemoteController.get();
             updatedRemoteController.setCompatibleWith(remotecontroller.getCompatibleWith());
             updatedRemoteController.setBatteryType(remotecontroller.getBatteryType());
@@ -87,7 +86,7 @@ public class RemoteControllerService {
             RemoteController returnRemoteController = remoteControllerRepository.save(updatedRemoteController);
 
             return toRemoteControllerDto(returnRemoteController);
-        }else {
+        } else {
             throw new RecordNotFoundException("Geen afstandsbediening gevonden");
         }
     }

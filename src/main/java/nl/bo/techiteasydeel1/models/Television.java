@@ -42,11 +42,6 @@ public class Television {
     )
     private List<WallBracket> wallBrackets;
 
-
-    public void setCiModule(CIModule ciModule) {
-        this.ciModule = ciModule;
-    }
-
     public Long getId() {
         return id;
     }
@@ -185,14 +180,18 @@ public class Television {
 
     public RemoteController getRemoteController() {
         return remoteController;
-   }
+    }
 
     public void setRemoteController(RemoteController remoteController) {
         this.remoteController = remoteController;
-   }
+    }
 
     public CIModule getCiModule() {
         return ciModule;
+    }
+
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
     }
 
     public List<WallBracket> getWallBrackets() {

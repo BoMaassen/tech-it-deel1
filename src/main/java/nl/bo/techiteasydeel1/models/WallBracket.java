@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 @Table(name = "wall_brackets")
 public class WallBracket {
+    @ManyToMany(mappedBy = "wallBrackets")
+    List<Television> televisions;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,9 +16,6 @@ public class WallBracket {
     private Boolean adjustable;
     private String name;
     private double price;
-
-    @ManyToMany(mappedBy = "wallBrackets")
-    List<Television> televisions;
 
     public List<Television> getTelevisions() {
         return televisions;

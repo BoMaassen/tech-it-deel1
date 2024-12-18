@@ -19,7 +19,7 @@ public class WallBracketService {
         this.wallBracketRepository = wallBracketRepository;
     }
 
-    public WallBracketDto toWallBracketDto(WallBracket wallBracket){
+    public WallBracketDto toWallBracketDto(WallBracket wallBracket) {
         WallBracketDto dto = new WallBracketDto();
         dto.setId(wallBracket.getId());
         dto.setSize(wallBracket.getSize());
@@ -29,7 +29,7 @@ public class WallBracketService {
         return dto;
     }
 
-    public WallBracket toWallBracket(WallBracketInputDto dto){
+    public WallBracket toWallBracket(WallBracketInputDto dto) {
         var wallbracket = new WallBracket();
         wallbracket.setSize(dto.getSize());
         wallbracket.setAdjustable(dto.getAdjustable());
@@ -38,39 +38,39 @@ public class WallBracketService {
         return wallbracket;
     }
 
-    public List<WallBracketDto> getWallBrackets(){
+    public List<WallBracketDto> getWallBrackets() {
         List<WallBracket> wallBrackets = wallBracketRepository.findAll();
         List<WallBracketDto> wallBracketDtoList = new ArrayList<>();
-        for (WallBracket wallBracket : wallBrackets){
+        for (WallBracket wallBracket : wallBrackets) {
             WallBracketDto wallBracketDto = toWallBracketDto(wallBracket);
             wallBracketDtoList.add(wallBracketDto);
         }
         return wallBracketDtoList;
     }
 
-    public WallBracketDto getWallBracketById(Long id){
+    public WallBracketDto getWallBracketById(Long id) {
         Optional<WallBracket> wallBracketOptional = wallBracketRepository.findById(id);
-        if (wallBracketOptional.isPresent()){
+        if (wallBracketOptional.isPresent()) {
             WallBracket wallBracket = wallBracketOptional.get();
             return toWallBracketDto(wallBracket);
-        }else {
+        } else {
             throw new RecordNotFoundException("Geen tv beugel gevonden");
         }
     }
 
-    public WallBracketDto saveWallBracket(WallBracketInputDto dto){
+    public WallBracketDto saveWallBracket(WallBracketInputDto dto) {
         WallBracket wallBracket = toWallBracket(dto);
         wallBracketRepository.save(wallBracket);
         return toWallBracketDto(wallBracket);
     }
 
-    public void deleteWallBracket(Long id){
+    public void deleteWallBracket(Long id) {
         wallBracketRepository.deleteById(id);
     }
 
-    public WallBracketDto updateWallBracket(Long id, WallBracketInputDto wallBracketInputDto){
+    public WallBracketDto updateWallBracket(Long id, WallBracketInputDto wallBracketInputDto) {
         Optional<WallBracket> currentWallBracket = wallBracketRepository.findById(id);
-        if (currentWallBracket.isPresent()){
+        if (currentWallBracket.isPresent()) {
             WallBracket updatedWallBracket = currentWallBracket.get();
             updatedWallBracket.setSize(wallBracketInputDto.getSize());
             updatedWallBracket.setAdjustable(wallBracketInputDto.getAdjustable());
@@ -78,7 +78,7 @@ public class WallBracketService {
             updatedWallBracket.setPrice(wallBracketInputDto.getPrice());
             WallBracket returnWallBracket = wallBracketRepository.save(updatedWallBracket);
             return toWallBracketDto(returnWallBracket);
-        }else throw new RuntimeException("Geen tv beugel gevonden");
+        } else throw new RuntimeException("Geen tv beugel gevonden");
     }
 
 }

@@ -2,11 +2,9 @@ package nl.bo.techiteasydeel1.services;
 
 import nl.bo.techiteasydeel1.dtos.CIModuleDto;
 import nl.bo.techiteasydeel1.dtos.CIModuleInputDto;
-import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.CIModule;
 import nl.bo.techiteasydeel1.repositories.CIModulesRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class CIModuleService {
         this.ciModulesRepository = ciModulesRepository;
     }
 
-    public CIModuleDto toCIModuleDto(CIModule ciModule){
+    public CIModuleDto toCIModuleDto(CIModule ciModule) {
         CIModuleDto dto = new CIModuleDto();
         dto.setId(ciModule.getId());
         dto.setName(ciModule.getName());
@@ -31,7 +29,7 @@ public class CIModuleService {
         return dto;
     }
 
-    public CIModule toCIModule(CIModuleInputDto dto){
+    public CIModule toCIModule(CIModuleInputDto dto) {
         var ciModule = new CIModule();
         ciModule.setName(dto.getName());
         ciModule.setType(dto.getType());
@@ -40,38 +38,38 @@ public class CIModuleService {
     }
 
 
-    public List<CIModuleDto> getCIModules(){
+    public List<CIModuleDto> getCIModules() {
         List<CIModule> ciModules = ciModulesRepository.findAll();
         List<CIModuleDto> ciModuleDtoList = new ArrayList<>();
-        for (CIModule ciModule : ciModules){
+        for (CIModule ciModule : ciModules) {
             CIModuleDto dto = toCIModuleDto(ciModule);
             ciModuleDtoList.add(dto);
         }
         return ciModuleDtoList;
     }
 
-    public CIModuleDto ciModuleById(Long id){
+    public CIModuleDto ciModuleById(Long id) {
         Optional<CIModule> ciModuleOptional = ciModulesRepository.findById(id);
-        if (ciModuleOptional.isPresent()){
+        if (ciModuleOptional.isPresent()) {
             CIModule ciModule = ciModuleOptional.get();
             return toCIModuleDto(ciModule);
-        }else throw new RecordNotFoundException("Geen CI module gevonden");
+        } else throw new RecordNotFoundException("Geen CI module gevonden");
     }
 
-    public CIModuleDto saveCIModule(CIModuleInputDto dto){
+    public CIModuleDto saveCIModule(CIModuleInputDto dto) {
         CIModule ciModule = toCIModule(dto);
         ciModulesRepository.save(ciModule);
 
         return toCIModuleDto(ciModule);
     }
 
-    public void deleteCIModule(Long id){
+    public void deleteCIModule(Long id) {
         ciModulesRepository.deleteById(id);
     }
 
-    public CIModuleDto updateCIModule(Long id, CIModuleInputDto cimodule){
-       Optional<CIModule> ciModuleOptional = ciModulesRepository.findById(id);
-        if (ciModuleOptional.isPresent()){
+    public CIModuleDto updateCIModule(Long id, CIModuleInputDto cimodule) {
+        Optional<CIModule> ciModuleOptional = ciModulesRepository.findById(id);
+        if (ciModuleOptional.isPresent()) {
             CIModule updatedCIModule = ciModuleOptional.get();
             updatedCIModule.setName(cimodule.getName());
             updatedCIModule.setType(cimodule.getType());
@@ -80,7 +78,7 @@ public class CIModuleService {
 
             return toCIModuleDto(returnCIModule);
 
-        }else {
+        } else {
             throw new RecordNotFoundException("Geen Ci Module gevonden");
         }
     }

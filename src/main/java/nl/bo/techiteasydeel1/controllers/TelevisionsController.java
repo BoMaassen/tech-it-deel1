@@ -5,8 +5,10 @@ import nl.bo.techiteasydeel1.dtos.IdInputDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.services.TelevisionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -39,7 +41,7 @@ public class TelevisionsController {
 
         TelevisionDto dto = televisionService.saveTelevision(televisionInputDto);
 
-        return ResponseEntity.created(null).body(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 
     }
 
@@ -56,24 +58,22 @@ public class TelevisionsController {
     }
 
     @PutMapping("/{id}/remotecontroller")
-    public ResponseEntity<TelevisionDto> linkRemoteController(@PathVariable Long id, @RequestBody IdInputDto input){
+    public ResponseEntity<TelevisionDto> linkRemoteController(@PathVariable Long id, @RequestBody IdInputDto input) {
         TelevisionDto dto = televisionService.assignRemoteControllerToTelevision(id, input);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}/cimodule")
-    public ResponseEntity<TelevisionDto> linkCiModule(@PathVariable Long id, @RequestBody IdInputDto input){
+    public ResponseEntity<TelevisionDto> linkCiModule(@PathVariable Long id, @RequestBody IdInputDto input) {
         TelevisionDto dto = televisionService.assignCiModuleToTelevision(id, input);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}/wallbracket")
-    public ResponseEntity<TelevisionDto> linkWallBracket(@PathVariable Long id, @RequestBody IdInputDto input){
+    public ResponseEntity<TelevisionDto> linkWallBracket(@PathVariable Long id, @RequestBody IdInputDto input) {
         TelevisionDto dto = televisionService.assignWallBracketToTelevision(id, input);
         return ResponseEntity.ok(dto);
     }
-
-
 
 
 }
