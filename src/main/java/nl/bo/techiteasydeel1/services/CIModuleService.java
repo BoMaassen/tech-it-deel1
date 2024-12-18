@@ -3,6 +3,7 @@ package nl.bo.techiteasydeel1.services;
 import nl.bo.techiteasydeel1.dtos.CIModuleDto;
 import nl.bo.techiteasydeel1.dtos.CIModuleInputDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
+import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.CIModule;
 import nl.bo.techiteasydeel1.repositories.CIModulesRepository;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class CIModuleService {
 
     public CIModuleDto toCIModuleDto(CIModule ciModule){
         CIModuleDto dto = new CIModuleDto();
+        dto.setId(ciModule.getId());
         dto.setName(ciModule.getName());
         dto.setType(ciModule.getType());
         dto.setPrice(ciModule.getPrice());
@@ -53,7 +55,7 @@ public class CIModuleService {
         if (ciModuleOptional.isPresent()){
             CIModule ciModule = ciModuleOptional.get();
             return toCIModuleDto(ciModule);
-        }else throw new RuntimeException("Geen CI module gevonden");
+        }else throw new RecordNotFoundException("Geen CI module gevonden");
     }
 
     public CIModuleDto saveCIModule(CIModuleInputDto dto){

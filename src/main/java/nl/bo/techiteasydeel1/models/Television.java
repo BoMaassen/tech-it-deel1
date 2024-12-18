@@ -8,22 +8,26 @@ public class Television {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String type;
-    String brand;
-    String name;
-    Double price;
-    Double availableSize;
-    Double refreshRate;
-    String screenType;
-    String screenQuality;
-    Boolean smartTv;
-    Boolean wifi;
-    Boolean voiceControl;
-    Boolean hdr;
-    Boolean bluetooth;
-    Boolean ambiLight;
-    Integer originalStock;
-    Integer sold;
+    private String type;
+    private String brand;
+    private String name;
+    private Double price;
+    private Double availableSize;
+    private Double refreshRate;
+    private String screenType;
+    private String screenQuality;
+    private Boolean smartTv;
+    private Boolean wifi;
+    private Boolean voiceControl;
+    private Boolean hdr;
+    private Boolean bluetooth;
+    private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "remote_controller_id", referencedColumnName = "id")
+    private RemoteController remoteController;
 
     public Long getId() {
         return id;
@@ -161,4 +165,11 @@ public class Television {
         this.sold = sold;
     }
 
+    public RemoteController getRemoteController() {
+        return remoteController;
+   }
+
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+   }
 }

@@ -20,6 +20,7 @@ public class WallBracketService {
 
     public WallBracketDto toWallBracketDto(WallBracket wallBracket){
         WallBracketDto dto = new WallBracketDto();
+        dto.setId(wallBracket.getId());
         dto.setSize(wallBracket.getSize());
         dto.setAdjustable(wallBracket.getAdjustable());
         dto.setName(wallBracket.getName());

@@ -1,9 +1,12 @@
 package nl.bo.techiteasydeel1.services;
 
+import nl.bo.techiteasydeel1.dtos.IdInputDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
+import nl.bo.techiteasydeel1.models.RemoteController;
 import nl.bo.techiteasydeel1.models.Television;
+import nl.bo.techiteasydeel1.repositories.RemoteControllerRepository;
 import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,16 @@ import java.util.Optional;
 @Service
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
     }
 
     public TelevisionDto toTelevisionDto(Television television) {
         TelevisionDto dto = new TelevisionDto();
+        dto.setId(television.getId());
         dto.setType(television.getType());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());
@@ -39,6 +45,7 @@ public class TelevisionService {
         dto.setSold(television.getSold());
         return dto;
     }
+
 
     public Television toTelevision(TelevisionInputDto dto) {
         var television = new Television();
@@ -123,5 +130,18 @@ public class TelevisionService {
             throw new RecordNotFoundException("Geen televisie gevonden");
         }
     }
+
+    public TelevisionDto assignRemoteControllerToTelevision(Long televisionId, IdInputDto inputDto){
+        Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException("Geen televisie gevonden met id " + televisionId));
+        RemoteController remoteController = remoteControllerRepository.findById(inputDto.id).orElseThrow(() -> new RecordNotFoundException("Geen afstandsbediening gevonden met id " + inputDto));
+
+        television.setRemoteController(remoteController);
+        televisionRepository.save(television);
+
+        return toTelevisionDto(television);
+
+    }
+
+
 
 }

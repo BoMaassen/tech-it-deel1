@@ -1,6 +1,7 @@
 package nl.bo.techiteasydeel1.controllers;
 
 import jakarta.validation.Valid;
+import nl.bo.techiteasydeel1.dtos.IdInputDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.services.TelevisionService;
@@ -52,6 +53,12 @@ public class TelevisionsController {
     public ResponseEntity<Object> deleteTv(@PathVariable Long id) {
         televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/remotecontroller")
+    public ResponseEntity<TelevisionDto> linkRemoteController(@PathVariable Long id, @RequestBody IdInputDto input){
+        TelevisionDto dto = televisionService.assignRemoteControllerToTelevision(id, input);
+        return ResponseEntity.ok(dto);
     }
 
 

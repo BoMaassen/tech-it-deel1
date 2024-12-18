@@ -1,6 +1,7 @@
 package nl.bo.techiteasydeel1.dtos;
 
 public class TelevisionDto {
+    public RemoteControllerDto remoteController;
     String type;
     String brand;
     String name;
@@ -18,6 +19,14 @@ public class TelevisionDto {
     Integer originalStock;
     Integer sold;
     private Long id;
+
+    public RemoteControllerDto getRemoteController() {
+        return remoteController;
+    }
+
+    public void setRemoteController(RemoteControllerDto remoteController) {
+        this.remoteController = remoteController;
+    }
 
     public Long getId() {
         return id;
