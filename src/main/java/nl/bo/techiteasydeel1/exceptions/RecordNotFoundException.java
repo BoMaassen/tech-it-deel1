@@ -1,12 +1,12 @@
 package nl.bo.techiteasydeel1.exceptions;
 
-public class RecordNotFoundException extends RuntimeException{
+public class RecordNotFoundException extends RuntimeException {
 
-    public RecordNotFoundException(){
+    public RecordNotFoundException() {
         super();
     }
-    public RecordNotFoundException(String message)
-    {
+
+    public RecordNotFoundException(String message) {
         super(message);
     }
 }
