@@ -2,6 +2,8 @@ package nl.bo.techiteasydeel1.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "televisions")
 public class Television {
@@ -28,6 +30,27 @@ public class Television {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "remote_controller_id", referencedColumnName = "id")
     private RemoteController remoteController;
+
+    @ManyToOne
+    @JoinColumn(name = "ci_module_id", referencedColumnName = "id")
+    private CIModule ciModule;
+
+
+
+
+
+
+    /*@ManyToMany
+    @JoinTable(
+            name = "car_accessories",
+            joinColumns = @JoinColumn(name = "car_id"),
+            inverseJoinColumns =  @JoinColumn(name = "accessory_id")
+    )
+    private List<Accessory> accessories;*/
+
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
+    }
 
     public Long getId() {
         return id;
@@ -172,4 +195,8 @@ public class Television {
     public void setRemoteController(RemoteController remoteController) {
         this.remoteController = remoteController;
    }
+
+    public CIModule getCiModule() {
+        return ciModule;
+    }
 }

@@ -4,8 +4,10 @@ import nl.bo.techiteasydeel1.dtos.IdInputDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionDto;
 import nl.bo.techiteasydeel1.dtos.TelevisionInputDto;
 import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
+import nl.bo.techiteasydeel1.models.CIModule;
 import nl.bo.techiteasydeel1.models.RemoteController;
 import nl.bo.techiteasydeel1.models.Television;
+import nl.bo.techiteasydeel1.repositories.CIModulesRepository;
 import nl.bo.techiteasydeel1.repositories.RemoteControllerRepository;
 import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,12 @@ import java.util.Optional;
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final CIModulesRepository ciModulesRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModulesRepository ciModulesRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.ciModulesRepository = ciModulesRepository;
     }
 
     public TelevisionDto toTelevisionDto(Television television) {
@@ -136,6 +140,17 @@ public class TelevisionService {
         RemoteController remoteController = remoteControllerRepository.findById(inputDto.id).orElseThrow(() -> new RecordNotFoundException("Geen afstandsbediening gevonden met id " + inputDto));
 
         television.setRemoteController(remoteController);
+        televisionRepository.save(television);
+
+        return toTelevisionDto(television);
+
+    }
+
+    public TelevisionDto assignCiModuleToTelevision(Long televisionId, IdInputDto inputDto){
+        Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException("Geen televisie gevonden met id " + televisionId));
+        CIModule ciModule = ciModulesRepository.findById(inputDto.id).orElseThrow(() -> new RecordNotFoundException("Geen Ci module gevonden met id " + inputDto));
+
+        television.setCiModule(ciModule);
         televisionRepository.save(television);
 
         return toTelevisionDto(television);

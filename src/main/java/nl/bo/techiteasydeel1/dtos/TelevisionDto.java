@@ -2,23 +2,32 @@ package nl.bo.techiteasydeel1.dtos;
 
 public class TelevisionDto {
     public RemoteControllerDto remoteController;
-    String type;
-    String brand;
-    String name;
-    Double price;
-    Double availableSize;
-    Double refreshRate;
-    String screenType;
-    String screenQuality;
-    Boolean smartTv;
-    Boolean wifi;
-    Boolean voiceControl;
-    Boolean hdr;
-    Boolean bluetooth;
-    Boolean ambiLight;
-    Integer originalStock;
-    Integer sold;
+    public CIModuleDto ciModuleDto;
+    public String type;
+    public String brand;
+    public String name;
+    public Double price;
+    public Double availableSize;
+    public Double refreshRate;
+    public String screenType;
+    public String screenQuality;
+    public Boolean smartTv;
+    public Boolean wifi;
+    public Boolean voiceControl;
+    public Boolean hdr;
+    public Boolean bluetooth;
+    public Boolean ambiLight;
+    public Integer originalStock;
+    public Integer sold;
     private Long id;
+
+    public CIModuleDto getCiModuleDto() {
+        return ciModuleDto;
+    }
+
+    public void setCiModuleDto(CIModuleDto ciModuleDto) {
+        this.ciModuleDto = ciModuleDto;
+    }
 
     public RemoteControllerDto getRemoteController() {
         return remoteController;

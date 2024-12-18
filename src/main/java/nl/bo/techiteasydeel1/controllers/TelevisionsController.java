@@ -61,6 +61,12 @@ public class TelevisionsController {
         return ResponseEntity.ok(dto);
     }
 
+    @PutMapping("/{id}/cimodule")
+    public ResponseEntity<TelevisionDto> linkCiModule(@PathVariable Long id, @RequestBody IdInputDto input){
+        TelevisionDto dto = televisionService.assignCiModuleToTelevision(id, input);
+        return ResponseEntity.ok(dto);
+    }
+
 
 }
 
