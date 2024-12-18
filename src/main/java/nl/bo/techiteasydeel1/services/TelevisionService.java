@@ -7,9 +7,11 @@ import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.CIModule;
 import nl.bo.techiteasydeel1.models.RemoteController;
 import nl.bo.techiteasydeel1.models.Television;
+import nl.bo.techiteasydeel1.models.WallBracket;
 import nl.bo.techiteasydeel1.repositories.CIModulesRepository;
 import nl.bo.techiteasydeel1.repositories.RemoteControllerRepository;
 import nl.bo.techiteasydeel1.repositories.TelevisionRepository;
+import nl.bo.techiteasydeel1.repositories.WallBracketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +23,13 @@ public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
     private final CIModulesRepository ciModulesRepository;
+    private final WallBracketRepository wallBracketRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModulesRepository ciModulesRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModulesRepository ciModulesRepository, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
         this.ciModulesRepository = ciModulesRepository;
+        this.wallBracketRepository = wallBracketRepository;
     }
 
     public TelevisionDto toTelevisionDto(Television television) {
@@ -137,7 +141,7 @@ public class TelevisionService {
 
     public TelevisionDto assignRemoteControllerToTelevision(Long televisionId, IdInputDto inputDto){
         Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException("Geen televisie gevonden met id " + televisionId));
-        RemoteController remoteController = remoteControllerRepository.findById(inputDto.id).orElseThrow(() -> new RecordNotFoundException("Geen afstandsbediening gevonden met id " + inputDto));
+        RemoteController remoteController = remoteControllerRepository.findById(inputDto.getId()).orElseThrow(() -> new RecordNotFoundException("Geen afstandsbediening gevonden met id " + inputDto.getId()));
 
         television.setRemoteController(remoteController);
         televisionRepository.save(television);
@@ -148,9 +152,20 @@ public class TelevisionService {
 
     public TelevisionDto assignCiModuleToTelevision(Long televisionId, IdInputDto inputDto){
         Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException("Geen televisie gevonden met id " + televisionId));
-        CIModule ciModule = ciModulesRepository.findById(inputDto.id).orElseThrow(() -> new RecordNotFoundException("Geen Ci module gevonden met id " + inputDto));
+        CIModule ciModule = ciModulesRepository.findById(inputDto.getId()).orElseThrow(() -> new RecordNotFoundException("Geen Ci module gevonden met id " + inputDto.getId()));
 
         television.setCiModule(ciModule);
+        televisionRepository.save(television);
+
+        return toTelevisionDto(television);
+
+    }
+
+    public TelevisionDto assignWallBracketToTelevision(Long televisionId, IdInputDto inputDto){
+        Television television = televisionRepository.findById(televisionId).orElseThrow(() -> new RecordNotFoundException("Geen televisie gevonden met id " + televisionId));
+        WallBracket wallBracket = wallBracketRepository.findById(inputDto.getId()).orElseThrow(() -> new RecordNotFoundException("Geen tv beugel gevonden met id " + inputDto.getId()));
+
+        television.getWallBrackets().add(wallBracket);
         televisionRepository.save(television);
 
         return toTelevisionDto(television);

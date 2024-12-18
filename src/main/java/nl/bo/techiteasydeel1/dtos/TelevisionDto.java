@@ -1,8 +1,11 @@
 package nl.bo.techiteasydeel1.dtos;
 
+import java.util.List;
+
 public class TelevisionDto {
     public RemoteControllerDto remoteController;
     public CIModuleDto ciModuleDto;
+    public List<WallBracketDto> wallBracketDtos;
     public String type;
     public String brand;
     public String name;

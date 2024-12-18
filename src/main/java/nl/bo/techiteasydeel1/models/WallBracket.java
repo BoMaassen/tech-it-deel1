@@ -2,6 +2,8 @@ package nl.bo.techiteasydeel1.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "wall_brackets")
 public class WallBracket {
@@ -12,6 +14,17 @@ public class WallBracket {
     private Boolean adjustable;
     private String name;
     private double price;
+
+    @ManyToMany(mappedBy = "wallBrackets")
+    List<Television> televisions;
+
+    public List<Television> getTelevisions() {
+        return televisions;
+    }
+
+    public void setTelevisions(List<Television> televisions) {
+        this.televisions = televisions;
+    }
 
     public Long getId() {
         return id;

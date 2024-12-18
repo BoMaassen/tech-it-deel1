@@ -67,6 +67,14 @@ public class TelevisionsController {
         return ResponseEntity.ok(dto);
     }
 
+    @PutMapping("/{id}/wallbracket")
+    public ResponseEntity<TelevisionDto> linkWallBracket(@PathVariable Long id, @RequestBody IdInputDto input){
+        TelevisionDto dto = televisionService.assignWallBracketToTelevision(id, input);
+        return ResponseEntity.ok(dto);
+    }
+
+
+
 
 }
 

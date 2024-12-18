@@ -81,7 +81,7 @@ public class CIModuleService {
             return toCIModuleDto(returnCIModule);
 
         }else {
-            throw new RuntimeException("Geen Ci Module gevonden");
+            throw new RecordNotFoundException("Geen Ci Module gevonden");
         }
     }
 }

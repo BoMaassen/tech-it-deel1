@@ -2,6 +2,7 @@ package nl.bo.techiteasydeel1.services;
 
 import nl.bo.techiteasydeel1.dtos.WallBracketInputDto;
 import nl.bo.techiteasydeel1.dtos.WallBracketDto;
+import nl.bo.techiteasydeel1.exceptions.RecordNotFoundException;
 import nl.bo.techiteasydeel1.models.WallBracket;
 import nl.bo.techiteasydeel1.repositories.WallBracketRepository;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class WallBracketService {
             WallBracket wallBracket = wallBracketOptional.get();
             return toWallBracketDto(wallBracket);
         }else {
-            throw new RuntimeException("Geen tv beugel gevonden");
+            throw new RecordNotFoundException("Geen tv beugel gevonden");
         }
     }
 

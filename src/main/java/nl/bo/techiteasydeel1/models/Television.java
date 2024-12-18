@@ -35,18 +35,13 @@ public class Television {
     @JoinColumn(name = "ci_module_id", referencedColumnName = "id")
     private CIModule ciModule;
 
-
-
-
-
-
-    /*@ManyToMany
+    @ManyToMany
     @JoinTable(
-            name = "car_accessories",
-            joinColumns = @JoinColumn(name = "car_id"),
-            inverseJoinColumns =  @JoinColumn(name = "accessory_id")
+            name = "television_wallbrackets", joinColumns = @JoinColumn(name = "television_id"),
+            inverseJoinColumns = @JoinColumn(name = "wallbracket_id")
     )
-    private List<Accessory> accessories;*/
+    private List<WallBracket> wallBrackets;
+
 
     public void setCiModule(CIModule ciModule) {
         this.ciModule = ciModule;
@@ -198,5 +193,13 @@ public class Television {
 
     public CIModule getCiModule() {
         return ciModule;
+    }
+
+    public List<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
     }
 }
