@@ -20,12 +20,14 @@ import java.util.Optional;
 public class TelevisionService {
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final RemoteControllerService remoteControllerService;
     private final CIModulesRepository ciModulesRepository;
     private final WallBracketRepository wallBracketRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModulesRepository ciModulesRepository, WallBracketRepository wallBracketRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, RemoteControllerService remoteControllerService, CIModulesRepository ciModulesRepository, WallBracketRepository wallBracketRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.remoteControllerService = remoteControllerService;
         this.ciModulesRepository = ciModulesRepository;
         this.wallBracketRepository = wallBracketRepository;
     }
@@ -49,7 +51,12 @@ public class TelevisionService {
         dto.setAmbiLight(television.getAmbiLight());
         dto.setOriginalStock(television.getOriginalStock());
         dto.setSold(television.getSold());
-
+        if (television.getRemoteController() != null) {
+            dto.setRemoteControllerId(television.getRemoteController().getId());
+        }
+        if (television.getCiModule()!= null) {
+            dto.setCiModuleId(television.getCiModule().getId());
+        }
         return dto;
     }
 

@@ -3,9 +3,8 @@ package nl.bo.techiteasydeel1.dtos;
 import java.util.List;
 
 public class TelevisionDto {
-    public RemoteControllerDto remoteController;
-    public CIModuleDto ciModuleDto;
-    public List<WallBracketDto> wallBracketDtos;
+    public Long remoteControllerId;
+    public Long ciModuleId;
     public String type;
     public String brand;
     public String name;
@@ -24,20 +23,20 @@ public class TelevisionDto {
     public Integer sold;
     private Long id;
 
-    public CIModuleDto getCiModuleDto() {
-        return ciModuleDto;
+    public Long getCiModuleId() {
+        return ciModuleId;
     }
 
-    public void setCiModuleDto(CIModuleDto ciModuleDto) {
-        this.ciModuleDto = ciModuleDto;
+    public void setCiModuleId(Long ciModuleId) {
+        this.ciModuleId = ciModuleId;
     }
 
-    public RemoteControllerDto getRemoteController() {
-        return remoteController;
+    public Long getRemoteControllerId() {
+        return remoteControllerId;
     }
 
-    public void setRemoteController(RemoteControllerDto remoteController) {
-        this.remoteController = remoteController;
+    public void setRemoteControllerId(Long remoteControllerId) {
+        this.remoteControllerId = remoteControllerId;
     }
 
     public Long getId() {

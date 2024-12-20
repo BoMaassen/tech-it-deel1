@@ -1,6 +1,7 @@
 package nl.bo.techiteasydeel1.controllers;
 
 
+import jakarta.validation.Valid;
 import nl.bo.techiteasydeel1.dtos.CIModuleDto;
 import nl.bo.techiteasydeel1.dtos.CIModuleInputDto;
 import nl.bo.techiteasydeel1.services.CIModuleService;
@@ -33,13 +34,13 @@ public class CIModuleController {
     }
 
     @PostMapping
-    public ResponseEntity<CIModuleDto> addCIModule(@RequestBody CIModuleInputDto ciModuleInputDto) {
+    public ResponseEntity<CIModuleDto> addCIModule(@Valid @RequestBody CIModuleInputDto ciModuleInputDto) {
         CIModuleDto ciModuleDto = ciModuleService.saveCIModule(ciModuleInputDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(ciModuleDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CIModuleDto> updateCIModule(@PathVariable Long id, @RequestBody CIModuleInputDto ciModuleInputDto) {
+    public ResponseEntity<CIModuleDto> updateCIModule(@PathVariable Long id, @Valid @RequestBody CIModuleInputDto ciModuleInputDto) {
         CIModuleDto ciModuleDto = ciModuleService.updateCIModule(id, ciModuleInputDto);
         return ResponseEntity.ok(ciModuleDto);
 

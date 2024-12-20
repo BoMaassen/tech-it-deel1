@@ -40,7 +40,7 @@ public class RemoteControllerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RemoteControllerDto> updateRemoteController(@PathVariable Long id, @RequestBody RemoteControllerInputDto remoteControllerInputDto) {
+    public ResponseEntity<RemoteControllerDto> updateRemoteController(@PathVariable Long id, @Valid @RequestBody RemoteControllerInputDto remoteControllerInputDto) {
         RemoteControllerDto dto = remoteControllerService.updateRemoteController(id, remoteControllerInputDto);
         return ResponseEntity.ok(dto);
 

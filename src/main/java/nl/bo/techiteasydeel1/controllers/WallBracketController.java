@@ -1,5 +1,6 @@
 package nl.bo.techiteasydeel1.controllers;
 
+import jakarta.validation.Valid;
 import nl.bo.techiteasydeel1.dtos.WallBracketDto;
 import nl.bo.techiteasydeel1.dtos.WallBracketInputDto;
 import nl.bo.techiteasydeel1.services.WallBracketService;
@@ -31,13 +32,13 @@ public class WallBracketController {
     }
 
     @PostMapping
-    public ResponseEntity<WallBracketDto> addWallBracket(@RequestBody WallBracketInputDto wallBracketInputDto) {
+    public ResponseEntity<WallBracketDto> addWallBracket(@Valid @RequestBody WallBracketInputDto wallBracketInputDto) {
         WallBracketDto wallBracketDto = wallBracketService.saveWallBracket(wallBracketInputDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(wallBracketDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WallBracketDto> updateWallBracket(@PathVariable Long id, @RequestBody WallBracketInputDto wallBracketInputDto) {
+    public ResponseEntity<WallBracketDto> updateWallBracket(@PathVariable Long id, @Valid @RequestBody WallBracketInputDto wallBracketInputDto) {
         WallBracketDto wallBracketDto = wallBracketService.updateWallBracket(id, wallBracketInputDto);
         return ResponseEntity.ok(wallBracketDto);
     }
