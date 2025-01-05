@@ -1,23 +1,43 @@
 package nl.bo.techiteasydeel1.dtos;
 
+import java.util.List;
+
 public class TelevisionDto {
-    String type;
-    String brand;
-    String name;
-    Double price;
-    Double availableSize;
-    Double refreshRate;
-    String screentype;
-    String screenQuality;
-    Boolean smartTv;
-    Boolean wifi;
-    Boolean voiceControl;
-    Boolean hdr;
-    Boolean bluetooth;
-    Boolean ambiLight;
-    Integer originalStock;
-    Integer sold;
+    public Long remoteControllerId;
+    public Long ciModuleId;
+    public String type;
+    public String brand;
+    public String name;
+    public Double price;
+    public Double availableSize;
+    public Double refreshRate;
+    public String screenType;
+    public String screenQuality;
+    public Boolean smartTv;
+    public Boolean wifi;
+    public Boolean voiceControl;
+    public Boolean hdr;
+    public Boolean bluetooth;
+    public Boolean ambiLight;
+    public Integer originalStock;
+    public Integer sold;
     private Long id;
+
+    public Long getCiModuleId() {
+        return ciModuleId;
+    }
+
+    public void setCiModuleId(Long ciModuleId) {
+        this.ciModuleId = ciModuleId;
+    }
+
+    public Long getRemoteControllerId() {
+        return remoteControllerId;
+    }
+
+    public void setRemoteControllerId(Long remoteControllerId) {
+        this.remoteControllerId = remoteControllerId;
+    }
 
     public Long getId() {
         return id;
@@ -75,12 +95,12 @@ public class TelevisionDto {
         this.refreshRate = refreshRate;
     }
 
-    public String getScreentype() {
-        return screentype;
+    public String getScreenType() {
+        return screenType;
     }
 
-    public void setScreentype(String screentype) {
-        this.screentype = screentype;
+    public void setScreenType(String screenType) {
+        this.screenType = screenType;
     }
 
     public String getScreenQuality() {

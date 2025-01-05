@@ -2,28 +2,45 @@ package nl.bo.techiteasydeel1.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "televisions")
 public class Television {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String type;
-    String brand;
-    String name;
-    Double price;
-    Double availableSize;
-    Double refreshRate;
-    String screentype;
-    String screenQuality;
-    Boolean smartTv;
-    Boolean wifi;
-    Boolean voiceControl;
-    Boolean hdr;
-    Boolean bluetooth;
-    Boolean ambiLight;
-    Integer originalStock;
-    Integer sold;
+    private String type;
+    private String brand;
+    private String name;
+    private Double price;
+    private Double availableSize;
+    private Double refreshRate;
+    private String screenType;
+    private String screenQuality;
+    private Boolean smartTv;
+    private Boolean wifi;
+    private Boolean voiceControl;
+    private Boolean hdr;
+    private Boolean bluetooth;
+    private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "remote_controller_id", referencedColumnName = "id")
+    private RemoteController remoteController;
+
+    @ManyToOne
+    @JoinColumn(name = "ci_module_id", referencedColumnName = "id")
+    private CIModule ciModule;
+
+    @ManyToMany
+    @JoinTable(
+            name = "television_wallbrackets", joinColumns = @JoinColumn(name = "television_id"),
+            inverseJoinColumns = @JoinColumn(name = "wallbracket_id")
+    )
+    private List<WallBracket> wallBrackets;
 
     public Long getId() {
         return id;
@@ -81,12 +98,12 @@ public class Television {
         this.refreshRate = refreshRate;
     }
 
-    public String getScreentype() {
-        return screentype;
+    public String getScreenType() {
+        return screenType;
     }
 
-    public void setScreentype(String screentype) {
-        this.screentype = screentype;
+    public void setScreenType(String screenType) {
+        this.screenType = screenType;
     }
 
     public String getScreenQuality() {
@@ -161,26 +178,27 @@ public class Television {
         this.sold = sold;
     }
 
-    public Television(){
-
+    public RemoteController getRemoteController() {
+        return remoteController;
     }
 
-    public Television(String type, String brand, String name, Double price, Double availableSize, Double refreshRate, String screentype, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screentype = screentype;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
+    }
+
+    public CIModule getCiModule() {
+        return ciModule;
+    }
+
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
+    }
+
+    public List<WallBracket> getWallBrackets() {
+        return wallBrackets;
+    }
+
+    public void setWallBrackets(List<WallBracket> wallBrackets) {
+        this.wallBrackets = wallBrackets;
     }
 }
